@@ -1,0 +1,249 @@
+---
+title: 'CYCLISTIC BIKE SHARE: CASE STUDY WITH R'
+output:
+  pdf_document: default
+  html_notebook: default
+  html_document:
+    df_print: paged
+---
+
+## Ngữ cảnh
+Giả sử bạn là một nhà phân tích dữ liệu làm việc trong nhóm phân tích tiếp thị tại Cyclistic, một công ty chia sẻ xe đạp ở Chicago. Giám đốc tiếp thị tin rằng thành công trong tương lai của công ty phụ thuộc vào việc tối đa hóa số lượng hội viên hàng năm. Do đó, nhóm của bạn muốn hiểu những người đi xe đạp bình thường và các hội viên thường niên sử dụng xe đạp Cyclistic khác nhau như thế nào. Từ những thông tin chi tiết này, nhóm sẽ thiết kế một chiến lược tiếp thị mới để chuyển đổi những người đi xe bình thường thành hội viên thường niên. Nhưng trước tiên, các nhà điều hành Cyclistic phải chấp thuận các đề xuất của bạn, vì vậy kết quả phải được thể hiện với những hiểu biết cặn kẽ về dữ liệu và hình ảnh trực quan hóa chuyên nghiệp.
+
+## ASK
+
+- Câu hỏi
+  1. Subcriber và Custumer sử dụng xe đạp Cyclistic khác nhau như thế nào?
+  2. Tại sao Custumer lại mua tư cách hội viên Cyclistic thường niên?
+  3. Làm thế nào Cyclistic có thể sử dụng phương tiện kỹ thuật số để tác động đến những người đi xe bình thường trở thành hội viên?
+
+## PREPARE
+
+Dataset: https://divvy-tripdata.s3.amazonaws.com/index.html
+  - Đối với phân tích này, tôi sẽ sử dụng dữ liệu Q1 2019 đến Q4 2019
+
+```{r}
+#install packages 
+install.packages("tidyverse")
+install.packages("lubridate")
+install.packages("ggplot2")
+install.packages("dplyr")
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+library(dplyr)
+```
+
+```{r}
+#import datasets
+q1_2019 <- read_csv("C:/Users/Pearls/Documents/Google R Project/Divvy_Trips_2019_Q1.csv")
+q2_2019 <- read_csv("C:/Users/Pearls/Documents/Google R Project/Divvy_Trips_2019_Q2.csv")
+q3_2019 <- read_csv("C:/Users/Pearls/Documents/Google R Project/Divvy_Trips_2019_Q3.csv")
+q4_2019 <- read_csv("C:/Users/Pearls/Documents/Google R Project/Divvy_Trips_2019_Q4.csv")
+```
+
+## Process
+Trước tiên, chúng ta cần kiểm tra tên cột trước khi hợp nhất bốn tập dữ liệu. Điều này rất quan trọng vì tất cả các tên cột phải giống nhau.
+```{r}
+colnames(q1_2019)
+colnames(q2_2019)
+colnames(q3_2019)
+colnames(q4_2019)
+```
+
+Bời vì các cột không đồng nhất với các dataset khác nên ta sẽ tiến hành đổi tên của các cột.
+
+```{r}
+q2_2019fixed <- rename(q2_2019
+                   ,ride_id = "01 - Rental Details Rental ID"
+                   ,rideable_type = "01 - Rental Details Bike ID" 
+                   ,started_at = "01 - Rental Details Local Start Time"  
+                   ,ended_at = "01 - Rental Details Local End Time"  
+                   ,start_station_name = "03 - Rental Start Station Name" 
+                   ,start_station_id = "03 - Rental Start Station ID"
+                   ,end_station_name = "02 - Rental End Station Name" 
+                   ,end_station_id = "02 - Rental End Station ID"
+                   ,tripduration = "01 - Rental Details Duration In Seconds Uncapped"
+                   ,birthyear = "05 - Member Details Member Birthday Year"
+                   ,gender = "Member Gender"
+                   ,member_casual = "User Type")
+
+q4_2019fixed <- rename(q4_2019
+                   ,ride_id = trip_id
+                   ,rideable_type = bikeid 
+                   ,started_at = start_time  
+                   ,ended_at = end_time  
+                   ,start_station_name = from_station_name 
+                   ,start_station_id = from_station_id 
+                   ,end_station_name = to_station_name 
+                   ,end_station_id = to_station_id 
+                   ,member_casual = usertype)
+
+q3_2019fixed <- rename(q3_2019
+                   ,ride_id = trip_id
+                   ,rideable_type = bikeid 
+                   ,started_at = start_time  
+                   ,ended_at = end_time  
+                   ,start_station_name = from_station_name 
+                   ,start_station_id = from_station_id 
+                   ,end_station_name = to_station_name 
+                   ,end_station_id = to_station_id 
+                   ,member_casual = usertype)
+
+q1_2019fixed <- rename(q1_2019
+                   ,ride_id = trip_id
+                   ,rideable_type = bikeid 
+                   ,started_at = start_time  
+                   ,ended_at = end_time  
+                   ,start_station_name = from_station_name 
+                   ,start_station_id = from_station_id 
+                   ,end_station_name = to_station_name 
+                   ,end_station_id = to_station_id 
+                   ,member_casual = usertype)
+```
+
+Tiếp theo, chúng ta cần kiểm tra các loại dữ liệu của từng cột để đảm bảo tất cả dữ liệu được định dạng chính xác.
+
+```{r}
+str(q1_2019fixed)
+str(q2_2019fixed)
+str(q3_2019fixed)
+str(q4_2019fixed)
+```
+
+Chúng ta cần chuyển gender thành ký tự để có thể gộp các bảng lại.
+
+```{r}
+q4_2019fixed <-  mutate(q4_2019fixed, gender = as.character(gender)) 
+q3_2019fixed <-  mutate(q3_2019fixed, gender = as.character(gender)) 
+q2_2019fixed <-  mutate(q2_2019fixed, gender = as.character(gender))
+q1_2019fixed <-  mutate(q1_2019fixed, gender = as.character(gender))
+```
+
+Bây giờ, tôi sẽ hợp nhất các dataframe thành một dataframe.
+
+```{r}
+trips = bind_rows(q1_2019fixed, q2_2019fixed, q3_2019fixed, q4_2019fixed)
+```
+
+Bước tiếp theo là làm sạch dữ liệu. Bước này rất quan trọng để đảm bảo dữ liệu chính xác và các tính toán có thể được thực hiện sau này.
+Ta sẽ thêm các cột liệt kê ngày, tháng, ngày và năm của mỗi chuyến đi. Điều này sẽ cho phép chúng ta tổng hợp dữ liệu chuyến đi cho mỗi tháng, ngày hoặc năm.
+
+```{r}
+trips$date <- as.Date(trips$started_at) 
+trips$month <- format(as.Date(trips$date), "%m")
+trips$day <- format(as.Date(trips$date), "%d")
+trips$year <- format(as.Date(trips$date), "%Y")
+trips$day_of_week <- format(as.Date(trips$date), "%A")
+colnames(trips)
+```
+
+Bây giờ, chúng ta sẽ thêm một cột cho độ dài chuyến đi cho mỗi chuyến đi bằng cách tìm chênh lệch thời gian giữa thời gian bắt đầu và thời gian kết thúc chuyến đi.
+
+```{r}
+trips$ride_length = difftime(trips$ended_at,trips$started_at)
+```
+
+Có một số dữ liệu "xấu" cần xóa khi ride_length là số âm do việc duy trì loại bỏ xe đạp để kiểm tra chất lượng. Chúng ta sẽ tạo một dataframe mới không có các chuyến đi có độ dài chuyến đi âm này.
+
+```{r}
+trip_data_clean <- trips[!(trips$ride_length <= 0),]
+glimpse(trip_data_clean)
+```
+## Analyze
+
+Bây giờ chúng ta sẽ thực hiện phân tích mô tả dữ liệu để tìm các mẫu giữa Customer và Subscriber.
+Trước khi chúng ta bắt đầu phân tích, nên xem xét các số liệu thống kê mô tả cơ bản về dữ liệu .
+
+```{r}
+mean(trip_data_clean$ride_length)
+median(trip_data_clean$ride_length) 
+max(trip_data_clean$ride_length) 
+min(trip_data_clean$ride_length)
+```
+
+Đầu tiên, chúng ta sẽ so sánh số liệu thống kê về chuyến đi của Customer và Subscriber .
+
+```{r}
+aggregate(trip_data_clean$ride_length ~ trip_data_clean$member_casual, FUN = mean)
+aggregate(trip_data_clean$ride_length ~ trip_data_clean$member_casual, FUN = median)
+aggregate(trip_data_clean$ride_length ~ trip_data_clean$member_casual, FUN = max)
+aggregate(trip_data_clean$ride_length ~ trip_data_clean$member_casual, FUN = min)
+```
+
+Trước khi tiếp tục, hãy sắp xếp cột ngày_của_tuần theo đúng thứ tự.
+
+```{r}
+trip_data_clean$day_of_week <- ordered(trip_data_clean$day_of_week, levels=c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
+```
+
+Tiếp theo, chúng ta sẽ kiểm tra thời gian đi xe trung bình mỗi ngày và tổng số chuyến đi đối với Customer và Subscriber
+
+```{r}
+plot <- trip_data_clean %>% 
+  group_by(member_casual, day_of_week) %>%  #groups by member_casual
+  summarise(number_of_rides = n() #calculates the number of rides and average duration 
+  ,average_ride_length = mean(ride_length),.groups="drop") %>% # calculates the average duration
+  arrange(member_casual, day_of_week) #sort
+
+```
+## Share
+
+Trước khi đưa ra đề xuất cho marketing department, chúng ta sẽ tạo một số visualizations để chia sẻ với stakeholders cũng như cung cấp cho chúng ta ý tưởng tốt hơn về những thông tin chi tiết cần chia sẻ.
+
+```{r}
+
+ ggplot(plot,aes(x = day_of_week, y = number_of_rides, fill = member_casual)) +
+ labs(title ="Total rides of Members and Casual riders Vs. Day of the week") +
+ geom_col(width=0.5, position = position_dodge(width=0.5))+
+ scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
+```
+
+Từ biểu đồ trên, có thể thấy rằng Subcriber là nhóm có số lượng đi xe nhiều nhất các ngày trong tuần.
+
+```{r}
+ggplot(plot,aes(x = day_of_week, y = average_ride_length, fill = member_casual)) +
+  geom_col(width=0.5, position = position_dodge(width=0.5)) + 
+  labs(title ="Average ride time of Members and Casual riders Vs. Day of the week")+
+  scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
+```
+
+Từ biểu đồ trên, chúng ta có thể quan sát thấy rằng nhóm Custumer đạp xe trong thời gian dài hơn trong tuần với số lần đi cao nhất vào cuối tuần trong khi các Subcriber lái xe với tốc độ ổn định trong tuần với số lần đi cao nhất vào cuối tuần.
+
+```{r}
+trip_data_clean %>%  
+  group_by(member_casual, month) %>% 
+  summarise(number_of_rides = n(),.groups="drop") %>% 
+  arrange(member_casual, month)  %>% 
+  ggplot(aes(x = month, y = number_of_rides, fill = member_casual)) +
+  labs(title ="Total rides by Members and Casual riders by Month") +
+  theme(axis.text.x = element_text(angle = 45)) +
+  geom_col(width=0.5, position = position_dodge(width=0.5)) +
+  scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
+
+```
+Từ biểu đồ trên, chúng ta có thể thấy rằng nhóm Subscriber có số lần đi cao hơn trong suốt cả năm
+
+## Act
+
+Đối với bước cuối cùng trong quy trình phân tích dữ liệu, chúng ta sẽ đưa ra ba khuyến nghị để tăng số lượng Subcriber hàng năm . Nhưng trước tiên, chúng ta sẽ đưa ra ba thông tin chi tiết chính.
+
+### Key Findings:
+1. Custumer đi xe nhiều nhất vào cuối tuần. Ngược lại, Subcriber thực hiện nhiều chuyến xe nhất trong tuần.
+2. Trung bình, Subcriber đi xe ngắn hơn so với Custumer .
+3. Không có sự khác biệt giữa Custumer và Subcriber về số chuyến họ thực hiện mỗi tháng. Cả Custumer và Subcriber đều có số lần đi nhiều nhất vào các tháng mùa hè và số lần đi ít nhất vào cuối mùa đông và đầu mùa xuân.
+
+### Recommendations
+
+1. Nhắm mục tiêu những Custumer thuê xe đạp để giải trí vào cuối tuần. 
+2. Tạo chiến dịch mùa hè lớn khi có nhiều người có khả năng thuê xe đạp hơn.
+
+
+
+
+
+
+
+
+
+
