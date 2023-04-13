@@ -4,11 +4,21 @@
 [![View Repositories](https://img.shields.io/badge/View-My_Repositories-blue?logo=GitHub)](https://github.com/quangcaophan?tab=repositories)
 [![View My Profile](https://img.shields.io/badge/View-My_Profile-green?logo=GitHub)](https://github.com/quangcaophan)
 
+## 📕 Table Of Contents
+* [SCENARIO](## SCENARIO)
+* [ASK](## ASK)
+* [PREPARE](## PREPARE)
+* [PROCESS](#process)
+* [ANALYZE](# ANALYZE)
+* [ACT](#act)
 
-## Scenario
+
+
+## SCENARIO
 
 > You are a junior data analyst working in the marketing analyst team at Cyclistic, a bike-share company in Chicago. The director of marketing believes the company's future success depends on maximizing the number of annual memberships. Therefore, your team wants to understand how casual riders and annual members use Cyclistic bikes differently. From these insights, your team will design a new marketing strategy to convert casual riders into annual members. But first, Cyclistic executives must approve your recommendations, so they must be backed up with compelling data insights and professional data visualizations.
 
+     
 ## ASK
 
 > - Question:
@@ -101,7 +111,7 @@ q4_2019 <- read_csv("Divvy_Trips_2019_Q4.csv")
      ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
 
-## Process
+## PROCESS
 
 First, we need to check the column names first before merging the four datasets. This is important because all column names must be the same.
 
@@ -409,7 +419,7 @@ glimpse(trip_data_clean)
      $ day_of_week        <chr> "Tuesday", "Tuesday", "Tuesday", "Tuesday", "Tuesda…
      $ ride_length        <drtn> 6.500000 mins, 7.350000 mins, 13.816667 mins, 29.7…
 
-## Analyze
+## ANALYZE
 
 We will now perform a descriptive analysis of the data to find patterns
 between Customer and Subscriber. Before we begin the analysis, it is a
@@ -504,7 +514,7 @@ trip_data_clean %>%
 From the chart above, we can see that the Subscriber group has a higher number of trips throughout the year
 
 ---
-## Act
+## ACT
 For the last step in the data analysis process, we will make three recommendations to increase the number of Subscribers every year. But first, we'll lay out three key insights.
 
 
