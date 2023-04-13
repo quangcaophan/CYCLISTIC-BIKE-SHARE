@@ -474,7 +474,7 @@ a better idea of what insights to share.
  scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
 ```
 
-![image](src="/IMG/1.png")
+![image]([src="/IMG/1.png"])
 From the chart above, it can be seen that Subscribe is the group with the most number of rides on weekdays.
 
 ---
@@ -485,7 +485,7 @@ ggplot(plot,aes(x = day_of_week, y = average_ride_length, fill = member_casual))
   scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
 ```
 
-![image](src="/IMG/2.png")
+![image]([src="/IMG/2.png"])
 From the chart above, we can observe that the Custumer group cycled for longer periods of the week with the highest number of rides on weekends while the Subscribers drove at a steady pace during the week with the highest number of rides. highest on weekends.
 
 ---
@@ -501,7 +501,7 @@ trip_data_clean %>%
   scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
 ```
 
-![image](src="/IMG/3.png")
+![image]([src="/IMG/3.png"])
 
 From the chart above, we can see that the Subscriber group has a higher number of trips throughout the year
 
