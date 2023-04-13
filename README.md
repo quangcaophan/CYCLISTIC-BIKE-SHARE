@@ -1,27 +1,22 @@
+# 8-Week SQL Challenge
+![Star Badge](https://img.shields.io/static/v1?label=%F0%9F%8C%9F&message=If%20Useful&style=style=flat&color=BC4E99)
+[![View Main Folder](https://img.shields.io/badge/View-Main_Folder-971901?)](https://github.com/quangcaophan/CYCLISTIC-BIKE-SHARE-CASE-STUDY-WITH-R-CASE-STUDY)
+[![View Repositories](https://img.shields.io/badge/View-My_Repositories-blue?logo=GitHub)](https://github.com/quangcaophan?tab=repositories)
+[![View My Profile](https://img.shields.io/badge/View-My_Profile-green?logo=GitHub)](https://github.com/quangcaophan)
+
+
 # CYCLISTIC BIKE SHARE CASE STUDY WITH R 
-
-#### Quang Cao Phan
-
-#### 2023-02-20
 
 ## Scenario
 
-You are a junior data analyst working in the marketing analyst team at
-Cyclistic, a bike-share company in Chicago. The director of marketing
-believes the company's future success depends on maximizing the number
-of annual memberships. Therefore, your team wants to understand how
-casual riders and annual members use Cyclistic bikes differently. From
-these insights, your team will design a new marketing strategy to
-convert casual riders into annual members. But first, Cyclistic
-executives must approve your recommendations, so they must be backed up
-with compelling data insights and professional data visualizations.
+> You are a junior data analyst working in the marketing analyst team at Cyclistic, a bike-share company in Chicago. The director of marketing believes the company's future success depends on maximizing the number of annual memberships. Therefore, your team wants to understand how casual riders and annual members use Cyclistic bikes differently. From these insights, your team will design a new marketing strategy to convert casual riders into annual members. But first, Cyclistic executives must approve your recommendations, so they must be backed up with compelling data insights and professional data visualizations.
 
 ## ASK
 
-- Question
-    1.  What is the difference between Subscriber and Custumer using Cyclistic bikes?
-    2.  Why did Custumer buy an annual Cyclistic membership?
-    3.  How can Cyclistic use digital media to influence casual riders to become members?
+> - Question:
+>    1.  What is the difference between Subscriber and Custumer using Cyclistic bikes?
+>    2.  Why did Custumer buy an annual Cyclistic membership?
+>    3.  How can Cyclistic use digital media to influence casual riders to become members?
 
 ## PREPARE
 
@@ -474,7 +469,9 @@ a better idea of what insights to share.
  scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
 ```
 
-![image]([src="/IMG/1.png"])
+<p align="center">
+  <img src="/IMG/1.png">
+                                             
 From the chart above, it can be seen that Subscribe is the group with the most number of rides on weekdays.
 
 ---
@@ -485,7 +482,9 @@ ggplot(plot,aes(x = day_of_week, y = average_ride_length, fill = member_casual))
   scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
 ```
 
-![image]([src="/IMG/2.png"])
+<p align="center">
+  <img src="/IMG/2.png">
+
 From the chart above, we can observe that the Custumer group cycled for longer periods of the week with the highest number of rides on weekends while the Subscribers drove at a steady pace during the week with the highest number of rides. highest on weekends.
 
 ---
@@ -501,7 +500,8 @@ trip_data_clean %>%
   scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
 ```
 
-![image]([src="/IMG/3.png"])
+<p align="center">
+  <img src="/IMG/3.png">
 
 From the chart above, we can see that the Subscriber group has a higher number of trips throughout the year
 
@@ -512,11 +512,11 @@ For the last step in the data analysis process, we will make three recommendatio
 
 ### Key Findings:
 
-    1.  Custumer rides the most on weekends. In contrast, Subscriber makes the most trips during the week.
-    2.  On average, Subscriber rides shorter than Custumer.
-    3.  There is no difference between Custumer and Subscriber in terms of the number of trips they make per month. Both Custumer and Subscriber have the highest number of trips in the summer months and the least number of trips in late winter and early spring.
+>    1.  Custumer rides the most on weekends. In contrast, Subscriber makes the most trips during the week.
+>    2.  On average, Subscriber rides shorter than Custumer.
+>    3.  There is no difference between Custumer and Subscriber in terms of the number of trips they make per month. Both Custumer and Subscriber have the highest number of trips in the summer months and the least number of trips in late winter and early spring.
 
 ### Recommendations
 
-    1.  Target Custumer bike rentals for weekend fun.
-    2.  Create a big summer campaign when more people can afford to rent bikes.
+>    1.  Target Custumer bike rentals for weekend fun.
+>    2.  Create a big summer campaign when more people can afford to rent bikes.
