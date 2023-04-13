@@ -5,11 +5,11 @@
 [![View My Profile](https://img.shields.io/badge/View-My_Profile-green?logo=GitHub)](https://github.com/quangcaophan)
 
 ## 📕 Table Of Contents
-* [SCENARIO](## SCENARIO)
-* [ASK](## ASK)
-* [PREPARE](## PREPARE)
+* [SCENARIO](#scenario)
+* [ASK](#ask)
+* [PREPARE](#prepare)
 * [PROCESS](#process)
-* [ANALYZE](# ANALYZE)
+* [ANALYZE](#analyze)
 * [ACT](#act)
 
 
