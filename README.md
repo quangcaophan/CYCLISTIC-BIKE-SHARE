@@ -61,7 +61,6 @@ q1_2019 <- read_csv("Divvy_Trips_2019_Q1.csv")
      dbl  (5): trip_id, bikeid, from_station_id, to_station_id, birthyear
      num  (1): tripduration
      dttm (2): start_time, end_time
-     
      ℹ Use `spec()` to retrieve the full column specification for this data.
      ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
@@ -75,25 +74,23 @@ q2_2019 <- read_csv("Divvy_Trips_2019_Q2.csv")
      chr  (4): 03 - Rental Start Station Name, 02 - Rental End Station Name, User...
      dbl  (5): 01 - Rental Details Rental ID, 01 - Rental Details Bike ID, 03 - R...
      num  (1): 01 - Rental Details Duration In Seconds Uncapped
-   dttm (2): 01 - Rental Details Local Start Time, 01 - Rental Details Local En...
-   
-   ℹ Use `spec()` to retrieve the full column specification for this data.
-   ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+     dttm (2): 01 - Rental Details Local Start Time, 01 - Rental Details Local En...
+     ℹ Use `spec()` to retrieve the full column specification for this data.
+     ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
 ``` r
 q3_2019 <- read_csv("Divvy_Trips_2019_Q3.csv")
 ```
 
-   Rows: 1640718 Columns: 12
-   ── Column specification ────────────────────────────────────────────────────────
-   Delimiter: ","
-   chr  (4): from_station_name, to_station_name, usertype, gender
-   dbl  (5): trip_id, bikeid, from_station_id, to_station_id, birthyear
-   num  (1): tripduration
-   dttm (2): start_time, end_time
-   
-   ℹ Use `spec()` to retrieve the full column specification for this data.
-   ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+       Rows: 1640718 Columns: 12
+       ── Column specification ────────────────────────────────────────────────────────
+       Delimiter: ","
+       chr  (4): from_station_name, to_station_name, usertype, gender
+       dbl  (5): trip_id, bikeid, from_station_id, to_station_id, birthyear
+       num  (1): tripduration
+       dttm (2): start_time, end_time
+       ℹ Use `spec()` to retrieve the full column specification for this data.
+       ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
 ``` r
 q4_2019 <- read_csv("Divvy_Trips_2019_Q4.csv")
